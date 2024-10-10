@@ -51,18 +51,18 @@ class User extends Authenticatable
         return $this->hasOne(SpectreData::class);
     }
 
-    public function user_medals()
+    public function UserMedals()
     {
-        return $this->hasMany(user_medal::class);
+        return $this->hasMany(UserMedal::class);
     }
 
-    public function user_antecedent()
+    public function UserAntecedent()
     {
-        return $this->hasMany(user_antecedent::class);
+        return $this->hasMany(UserAntecedent::class);
     }
 
-    public function absence()
+    public function Absence()
     {
-        return $this->hasMany(absence::class);
+        return $this->hasMany(Absence::class);
     }
 }

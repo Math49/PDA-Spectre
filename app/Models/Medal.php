@@ -11,7 +11,7 @@ class Medal extends Model
 
     protected $fillable = ['name', 'description', 'role', 'image'];
 
-    public function user_medal()
+    public function UserMedal()
     {
         return $this->hasMany(user_medal::class);
     }

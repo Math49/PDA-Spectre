@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class base_de_donnees extends Model
+class BaseDeDonnee extends Model
 {
     use HasFactory;
 
@@ -13,6 +13,6 @@ class base_de_donnees extends Model
 
     public function bdd_antecedent()
     {
-        return $this->hasMany(bdd_antecedent::class);
+        return $this->hasMany(BddAntecedent::class);
     }
 }

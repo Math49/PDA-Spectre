@@ -9,13 +9,13 @@ use App\Models\SpectreData;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 use App\Models\Medal;
-use App\Models\user_medal;
-use App\Models\user_antecedent;
-use App\Models\absence;
+use App\Models\UserMedal;
+use App\Models\UserAntecedent;
+use App\Models\Absence;
 use Carbon\Carbon;
-use App\Models\base_de_donnees;
-use App\Models\bdd_antecedent;
-use App\Models\historique;
+use App\Models\BaseDeDonnee;
+use App\Models\BddAntecedent;
+use App\Models\Historique;
 use App\Models\PhotoUser;
 use Illuminate\Support\Facades\Storage;
 
@@ -25,8 +25,8 @@ class Spectre_Data extends Controller
     {
 
         $spectre = SpectreData::where('user_id', Auth::id())->first();
-        $antecedents = user_antecedent::where('user_id', Auth::id())->get();
-        $medalsList = user_medal::where('user_id', Auth::id())->where('is_active', 1)->get();
+        $antecedents = UserAntecedent::where('user_id', Auth::id())->get();
+        $medalsList = UserMedal::where('user_id', Auth::id())->where('is_active', 1)->get();
         $medals = Medal::all();
 
 
@@ -79,8 +79,8 @@ class Spectre_Data extends Controller
     {
 
         $SpectreData = SpectreData::all();
-        $absences = absence::all();
-        $BDD = base_de_donnees::all();
+        $absences = Absence::all();
+        $BDD = BaseDeDonnee::all();
         $users = User::with('roles')->get();
         
         
@@ -133,8 +133,8 @@ class Spectre_Data extends Controller
     {
         $users = User::with('roles')->get();
         $SpectreData = SpectreData::all();
-        $absences = absence::all();
-        $BDD = base_de_donnees::all();
+        $absences = Absence::all();
+        $BDD = BaseDeDonnee::all();
 
         $historique = new historique();
         $historique->user_id = Auth::id();
@@ -190,8 +190,8 @@ class Spectre_Data extends Controller
 
         $users = User::with('roles')->get();
         $SpectreData = SpectreData::all();
-        $absences = absence::all();
-        $BDD = base_de_donnees::all();
+        $absences = Absence::all();
+        $BDD = BaseDeDonnee::all();
 
         $roles = Auth::user()->roles;
         $permissions = $roles->flatMap(function ($role) {
@@ -240,12 +240,12 @@ class Spectre_Data extends Controller
         $user = User::with('roles')->find($id);
         $data = SpectreData::where('user_id', $id)->first();
         $medal = Medal::all();
-        $userMedals = user_medal::where('user_id', $id)->get();
-        $antecedents = user_antecedent::where('user_id', $id)->get();
+        $userMedals = UserMedal::where('user_id', $id)->get();
+        $antecedents = UserAntecedent::where('user_id', $id)->get();
 
         $SpectreData = SpectreData::all();
-        $absences = absence::all();
-        $BDD = base_de_donnees::all();
+        $absences = Absence::all();
+        $BDD = BaseDeDonnee::all();
         $users = User::with('roles')->get();
 
         $roles = Auth::user()->roles;
@@ -370,12 +370,12 @@ class Spectre_Data extends Controller
         $user = User::findOrFail($id);
         $user->save();
 
-        $userMedal = user_medal::where('user_id', $id)->where('medal_id', $medal_id)->first();
+        $userMedal = UserMedal::where('user_id', $id)->where('medal_id', $medal_id)->first();
         if ($userMedal) {
             $userMedal->is_active = $is_active;
             $userMedal->save();
         } else {
-            $userMedal = new user_medal();
+            $userMedal = new UserMedal();
             $userMedal->user_id = $id;
             $userMedal->medal_id = $medal_id;
             $userMedal->is_active = $is_active;
@@ -431,7 +431,7 @@ class Spectre_Data extends Controller
         $user = User::findOrFail($id);
         $user->save();
 
-        $userAntecedent = new user_antecedent();
+        $userAntecedent = new UserAntecedent();
         $userAntecedent->user_id = $id;
         $userAntecedent->description = $description;
         $userAntecedent->save();
@@ -464,7 +464,7 @@ class Spectre_Data extends Controller
 
     public function deleteUserAntecedents($id, $ant_id)
     {
-        $userAntecedent = user_antecedent::findOrFail($ant_id);
+        $userAntecedent = UserAntecedent::findOrFail($ant_id);
         $spectreData = SpectreData::where('user_id', $id)->first();
         $userAntecedent->delete();
 
@@ -503,12 +503,12 @@ class Spectre_Data extends Controller
         $historique->type = "user";
         $historique->description = "Suppression du compte de SPECTRE-" . $spectreData->matricule;
 
-        $userMedals = user_medal::where('user_id', $id)->get();
+        $userMedals = UserMedal::where('user_id', $id)->get();
         foreach ($userMedals as $userMedal) {
             $userMedal->delete();
         }
         
-        $userAntecedents = user_antecedent::where('user_id', $id)->get();
+        $userAntecedents = UserAntecedent::where('user_id', $id)->get();
         foreach ($userAntecedents as $userAntecedent) {
             $userAntecedent->delete();
         }
@@ -526,8 +526,8 @@ class Spectre_Data extends Controller
     {
         $users = User::with('roles')->get();
         $SpectreData = SpectreData::all();
-        $absences = absence::all();
-        $BDD = base_de_donnees::all();
+        $absences = Absence::all();
+        $BDD = BaseDeDonnee::all();
 
         $roles = Auth::user()->roles;
         $permissions = $roles->flatMap(function ($role) {
@@ -591,7 +591,7 @@ class Spectre_Data extends Controller
         $user = User::findOrFail($id);
         $user->save();
 
-        $userAntecedent = new user_antecedent();
+        $userAntecedent = new UserAntecedent();
         $userAntecedent->user_id = $id;
         $userAntecedent->description = "Mise à jour de la loyauté, de " . $user->spectreData->loyauté . " à " . $loyaute . " pour la raison suivante : " . $raison;
         $userAntecedent->save();
@@ -660,7 +660,7 @@ class Spectre_Data extends Controller
         $absence->save();
 
 
-        $userAntecedent = new User_Antecedent();
+        $userAntecedent = new UserAntecedent();
         $userAntecedent->user_id = $user->id;
         $userAntecedent->description = "Absence du " . $dateStartFormatted . " au " . $dateEndFormatted . " pour la raison suivante : " . $request->raison;
         $userAntecedent->save();
@@ -680,7 +680,7 @@ class Spectre_Data extends Controller
         $users = User::with('roles')->get();
         $SpectreData = SpectreData::all();
 
-        $BDD = base_de_donnees::all();
+        $BDD = BaseDeDonnee::all();
 
         $roles = Auth::user()->roles;
         $permissions = $roles->flatMap(function ($role) {
@@ -752,7 +752,7 @@ class Spectre_Data extends Controller
     {
         $users = User::with('roles')->get();
         $SpectreData = SpectreData::all();
-        $BDD = base_de_donnees::all();
+        $BDD = BaseDeDonnee::all();
 
         $historique = new historique();
         $historique->user_id = Auth::id();
@@ -783,8 +783,8 @@ class Spectre_Data extends Controller
     {
         
         
-        $data = base_de_donnees::where('id', $id)->first();
-        $antecedents = bdd_antecedent::where('bdd_id', $id)->get();
+        $data = BaseDeDonnee::where('id', $id)->first();
+        $antecedents = BddAntecedent::where('bdd_id', $id)->get();
 
         $historique = new historique();
         $historique->user_id = Auth::id();
@@ -850,7 +850,7 @@ class Spectre_Data extends Controller
             $imagePath = $request->file('photo')->store('photo_bdd', 'public');
         }
         
-        $bdd = new base_de_donnees();
+        $bdd = new BaseDeDonnee();
         $bdd->nom = $request->nom;
         $bdd->prenom = $request->prenom;
         $bdd->grade = $request->grade;
@@ -879,10 +879,10 @@ class Spectre_Data extends Controller
         ]);
 
         $description = $request->description;
-        $bdd = base_de_donnees::findOrFail($id);
+        $bdd = BaseDeDonnee::findOrFail($id);
         $bdd->save();
 
-        $bddAntecedent = new bdd_antecedent();
+        $bddAntecedent = new BddAntecedent();
         $bddAntecedent->bdd_id = $id;
         $bddAntecedent->description = $description;
         $bddAntecedent->save();
@@ -914,8 +914,8 @@ class Spectre_Data extends Controller
     {
         $users = User::with('roles')->get();
         $SpectreData = SpectreData::all();
-        $BDD = base_de_donnees::all();
-        $absences = absence::all();
+        $BDD = BaseDeDonnee::all();
+        $absences = Absence::all();
 
         $historique = new historique();
         $historique->user_id = Auth::id();
@@ -970,12 +970,12 @@ class Spectre_Data extends Controller
 
     Public function BDDAdminView($id)
     {
-        $data = base_de_donnees::where('id', $id)->first();
-        $antecedents = bdd_antecedent::where('bdd_id', $id)->get();
+        $data = BaseDeDonnee::where('id', $id)->first();
+        $antecedents = BddAntecedent::where('bdd_id', $id)->get();
 
         $SpectreData = SpectreData::all();
-        $absences = absence::all();
-        $BDD = base_de_donnees::all();
+        $absences = Absence::all();
+        $BDD = BaseDeDonnee::all();
         $users = User::with('roles')->get();
 
         $historique = new historique();
@@ -1036,10 +1036,10 @@ class Spectre_Data extends Controller
         ]);
 
         $description = $request->description;
-        $bdd = base_de_donnees::findOrFail($id);
+        $bdd = BaseDeDonnee::findOrFail($id);
         $bdd->save();
 
-        $bddAntecedent = new bdd_antecedent();
+        $bddAntecedent = new BddAntecedent();
         $bddAntecedent->bdd_id = $id;
         $bddAntecedent->description = $description;
         $bddAntecedent->save();
@@ -1072,8 +1072,8 @@ class Spectre_Data extends Controller
     {
 
         $SpectreData = SpectreData::all();
-        $absences = absence::all();
-        $BDD = base_de_donnees::all();
+        $absences = Absence::all();
+        $BDD = BaseDeDonnee::all();
         $users = User::with('roles')->get();
 
         $roles = Auth::user()->roles;
@@ -1138,7 +1138,7 @@ class Spectre_Data extends Controller
             $imagePath = $request->file('photo')->store('photo_bdd', 'public');
         }
         
-        $bdd = new base_de_donnees();
+        $bdd = new BaseDeDonnee();
         $bdd->nom = $request->nom;
         $bdd->prenom = $request->prenom;
         $bdd->grade = $request->grade;
@@ -1169,7 +1169,7 @@ class Spectre_Data extends Controller
         $data = $request->data;
 
         if ($data['prenom'] || $data['nom'] || $data['grade'] || $data['matricule'] || $data['branche'] || $data['GI'] || $data['groupe'] || $data['status']) {
-            $bdd = base_de_donnees::where('id', $id)->first();
+            $bdd = BaseDeDonnee::where('id', $id)->first();
             if ($data['prenom']) {
                 $bdd->prenom = $data['prenom'];
             }
@@ -1224,10 +1224,10 @@ class Spectre_Data extends Controller
 
     public function deleteBDDAdminAntecedents($id, $ant_id)
     {
-        $bddAntecedent = bdd_antecedent::findOrFail($ant_id);
+        $bddAntecedent = BddAntecedent::findOrFail($ant_id);
         $bddAntecedent->delete();
 
-        $Data = base_de_donnees::where('id', $id)->first();
+        $Data = BaseDeDonnee::where('id', $id)->first();
 
         $historique = new historique();
         $historique->user_id = Auth::id();
@@ -1255,7 +1255,7 @@ class Spectre_Data extends Controller
 
     public function deleteBDD($id)
     {
-        $bdd = base_de_donnees::findOrFail($id);
+        $bdd = BaseDeDonnee::findOrFail($id);
         if ($bdd->lien_photo) {
             Storage::disk('public')->delete($bdd->lien_photo);
         }
@@ -1277,8 +1277,8 @@ class Spectre_Data extends Controller
         $users = User::with('roles')->get();
 
         $SpectreData = SpectreData::all();
-        $absences = absence::all();
-        $BDD = base_de_donnees::all();
+        $absences = Absence::all();
+        $BDD = BaseDeDonnee::all();
 
         $roles = Auth::user()->roles;
         $permissions = $roles->flatMap(function ($role) {
