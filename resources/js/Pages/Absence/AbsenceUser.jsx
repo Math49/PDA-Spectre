@@ -33,7 +33,6 @@ export default function AbsenceUser({ auth }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (dateStart && dateEnd && reason) {
-            console.log("Absence signalée du", dateStart, "au", dateEnd, "pour", reason);
             Inertia.post(route('absenceStore', user.id ),{
                 'dateStart': dateStart,
                 'dateEnd': dateEnd,

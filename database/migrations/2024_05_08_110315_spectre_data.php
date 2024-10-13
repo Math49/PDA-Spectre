@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');  // Clé étrangère pour la table users
             $table->string('STEAM_ID');
-            $table->integer('matricule');
-            $table->integer('loyauté');
-            $table->integer('vie');
+            $table->unsignedBigInteger('matricule');
+            $table->unsignedBigInteger('loyauté');
+            $table->unsignedBigInteger('vie');
             $table->timestamps();
 
             // Définition de la clé étrangère

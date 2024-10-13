@@ -90,11 +90,11 @@ export default function LoyauteView({ auth, users, SpectreData, header }) {
         
         let selectedPoints = 0;
         if (selectedBonus === "Bonus") {
-            const bonus = listBonus.find((item) => item.id == value.target.value);
+            const bonus = listBonus.find((item) => parseInt(item.id) === parseInt(value.target.value));
             selectedPoints = bonus ? bonus.point : 0;
             setSelectedReason(bonus.name);
         } else if (selectedBonus === "Malus") {
-            const malus = listMalus.find((item) => item.id == value.target.value);
+            const malus = listMalus.find((item) => parseInt(item.id) === parseInt(value.target.value));
             selectedPoints = malus ? malus.point : 0;
             setSelectedReason(malus.name);
         }

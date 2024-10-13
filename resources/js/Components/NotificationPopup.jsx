@@ -19,7 +19,7 @@ export default function NotificationPopup() {
 
     return (
         showPopup && (
-            <div className="fixed z-50 top-[0%] right-[0%]">
+            <div className={`fixed ${showPopup ? "z-50" : "-z-30"} top-[0%] right-[0%]`}>
                 <div
                     id="modal-box"
                     className={`h-[10vh] flex items-center gap-2 p-6 bg-[#00010F] bg-opacity-80 rounded-l-[20px] transition-all duration-500 ease-in-out transform ${

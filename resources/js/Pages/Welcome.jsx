@@ -67,7 +67,7 @@ export default function Welcome({ data, auth }) {
 
     data.medalsList.map((medal) => {
         let medalData = data.medals.find(
-            (medalData) => medalData.id === medal.medal_id
+            (medalData) => parseInt(medalData.id) === parseInt(medal.medal_id)
         );
         medals.push({
             id: medalData.id,

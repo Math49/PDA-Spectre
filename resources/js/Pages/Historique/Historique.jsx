@@ -10,11 +10,8 @@ import dayjs from 'dayjs';
 export default function Historique({ auth, historiques, users, header}) {
     
     let Historiques = [];
-
-    console.log(users);
-
     historiques.map((historique) => {
-        let user = users.find(user => user.id === historique.user_id);
+        let user = users.find(user => parseInt(user.id) === parseInt(historique.user_id));
         Historiques.push({
             id: historique.id,
             date: dayjs(historique.created_at).format('DD/MM/YYYY à HH:mm'),

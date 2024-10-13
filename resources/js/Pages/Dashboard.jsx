@@ -8,14 +8,11 @@ import dayjs from 'dayjs';
 
 export default function Dashboard({ auth, header }) {
 
-    console.log(header);
-
     let abstab = [];
 
     let absenceslist = header.absences.slice(-5);
-
     absenceslist.map((absence) => {
-        let user = header.spectre.find(spectre => spectre.user_id === absence.user_id);
+        let user = header.spectre.find(spectre => parseInt(spectre.user_id) === parseInt(absence.user_id));
         abstab.push({
             id: absence.id,
             date: `${dayjs(absence.date_debut).format('DD/MM/YYYY')} au ${dayjs(absence.date_fin).format('DD/MM/YYYY')}`,
@@ -28,7 +25,7 @@ export default function Dashboard({ auth, header }) {
     let userslist = header.users.slice(-5);
 
     userslist.map((users) => {
-        let user = header.spectre.find(spectre => spectre.user_id === users.id);
+        let user = header.spectre.find(spectre => parseInt(spectre.user_id) === parseInt(users.id));
         userstab.push({
             id: users.id,
             date: dayjs(users.created_at).format('DD/MM/YYYY'),

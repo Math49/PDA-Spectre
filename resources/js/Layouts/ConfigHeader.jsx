@@ -3,7 +3,8 @@ import React from "react";
 export default function ConfigHeader({title, data}){
 
     let grade = data.auth.roles[0];
-    let matricule = data.spectre.find(spectre => spectre.user_id === data.auth.id).matricule;
+    let user = data.spectre.find(spectre => parseInt(spectre.user_id) === data.auth.id);
+    let matricule = user ? user.matricule : 'Unknown';
     let specialite = data.auth.roles[1];
 
     let nmb_agents = data.spectre.length;
