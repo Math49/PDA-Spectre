@@ -108,6 +108,7 @@ input:focus {
 body {
     background-color: rgb(0, 1, 15);
     font-family: 'Inter', sans-serif !important;
+    overflow-x: hidden;
 }
 
 body::before {

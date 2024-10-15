@@ -37,11 +37,11 @@ class RegisteredUserController extends Controller
         $request->validate([
             'username' => 'required|string|max:255',
             'password' => 'required|string|confirmed|min:8',
-            'matricule' => 'required|numeric',
+            'matricule' => 'required|string|max:17',
             'grade' => 'required|string',
             'specialisation' => 'required|string',
             'loyaute' => 'required|numeric',
-            'STEAM_ID' => 'required|string',
+            'STEAM_ID' => 'required|string|size:17',
         ]);
 
         $user = User::create([
@@ -49,7 +49,9 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        $spectreData = SpectreData::create([
+        $user->syncRoles([$request->grade, $request->specialisation]);
+
+        $SpectreData = SpectreData::create([
             'user_id' => $user->id,
             'STEAM_ID' => $request->STEAM_ID,
             'matricule' => $request->matricule,
@@ -57,7 +59,6 @@ class RegisteredUserController extends Controller
             'vie' => 3,
         ]);
 
-        $user->syncRoles([$request->grade, $request->specialisation]);
     
         $historique = new historique();
         $historique->user_id = Auth::user()->id;
@@ -65,7 +66,8 @@ class RegisteredUserController extends Controller
         $historique->description = 'Création du compte de SPECTRE-' . $request->matricule;
         $historique->save();
 
-        event(new Registered($user, $spectreData));
+        event(new Registered($user, $SpectreData));
+
 
         session()->flash('success', 'SPECTRE-' . $request->matricule . ' a bien été créé.');
 

@@ -16,12 +16,12 @@ return new class extends Migration
             $table->string('nom');
             $table->string('prenom');
             $table->string('grade');
-            $table->integer('matricule');
+            $table->string('matricule', 17);
             $table->string('branche');
             $table->boolean('GI');
             $table->string('groupe');
             $table->string('status');
-            $table->string('steam_id');
+            $table->string('steam_id', 17);
             $table->string('lien_photo');
             $table->timestamps();
         });

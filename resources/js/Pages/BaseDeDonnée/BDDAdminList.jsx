@@ -19,7 +19,7 @@ export default function BDDAdminList({ auth, users, SpectreData, BDD, header }) 
                 <ConfigContent> 
                     <div className='flex flex-col py-[2vh] px-[2vw] h-full gap-[2vh]'>
                         <div className='flex w-full justify-center'>
-                            <h3 className='text-white font-bold text-[4vh]'>Avis de Recherche</h3>
+                            <h3 className='text-white font-bold text-[4vh]'>Base de Donnée</h3>
                         </div>
                         <div className='h-min'>
                             <a href={route("AddAdminBDD")} className='text-white font-semibold text-[3.5vh] flex gap-[1vw] items-center w-min px-[1.5vw] py-[0.8vh] border-white border-1 border-opacity-75 rounded-[2px]'>

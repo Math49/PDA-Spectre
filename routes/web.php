@@ -34,7 +34,7 @@ Route::middleware('auth', 'can:dashboard')->group(function () {
     });
 
     Route::middleware('auth', 'can:viewAbsence')->group(function () {
-        Route::delete('/dashboard/absence/{id}', [Spectre_Data::class, 'deleteAbsence'])->name('deleteAbsence');
+        Route::delete('/dashboard/absence/{id}/delete', [Spectre_Data::class, 'deleteAbsence'])->name('deleteAbsence');
     });
 
     Route::middleware('auth', 'can:viewUser')->group(function () {
@@ -100,8 +100,8 @@ Route::middleware('auth', 'can:dashboard')->group(function () {
     });
 
     Route::middleware('auth', 'can:addBDD', 'can:viewBDD')->group(function () {
-        Route::get('/dashboard/BDD/create', [Spectre_Data::class, 'AddAdminBDD'])->name('AddAdminBDD');
-        Route::post('/dashboard/BDD/create/store', [Spectre_Data::class, 'AddAdminBDDStore'])->name('AddAdminBDDStore');
+        Route::get('/dashboard/BDD/AdminCreate', [Spectre_Data::class, 'AddAdminBDD'])->name('AddAdminBDD');
+        Route::post('/dashboard/BDD/AdminCreate/store', [Spectre_Data::class, 'AddAdminBDDStore'])->name('AddAdminBDDStore');
     });
 
     Route::middleware('auth', 'can:viewAll')->group(function () {
@@ -117,8 +117,8 @@ Route::middleware('auth', 'can:dashboard')->group(function () {
 
 //BDD
 Route::middleware('auth', 'can:addBDD')->group(function () {
-    Route::get('/BDD/Create', [Spectre_Data::class, 'BDDUserCreate'])->name('BDDUserCreate');
-    Route::post('/BDD/Create/store', [Spectre_Data::class, 'BDDUserStore'])->name('BDDUserStore');
+    Route::get('/BDD/UserCreate', [Spectre_Data::class, 'BDDUserCreate'])->name('BDDUserCreate');
+    Route::post('/BDD/UserCreate/store', [Spectre_Data::class, 'BDDUserStore'])->name('BDDUserStore');
 });
 
 Route::middleware('auth', 'can:editAntecedentsBDD')->group(function () {

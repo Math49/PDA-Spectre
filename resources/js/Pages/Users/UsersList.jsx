@@ -15,7 +15,7 @@ export default function UsersList({ users, auth, SpectreData, header, photos }) 
     users.map((user) => {
         if (user.id !== 1) {
             SpectreData.map((spectre) => {
-                if (user.id === spectre.user_id) {
+                if (user.id === parseInt(spectre.user_id)) {
                     userData.push({
                         ...user,
                         ...spectre

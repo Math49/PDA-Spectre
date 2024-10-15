@@ -23,8 +23,6 @@ export default function BDDUserView({ auth, data, antecedents }) {
         }
     };
 
-
-
     return (
         <div className="background-spectre z-10 relative flex flex-col gap-[5vh] h-[100vh]">
             <Head title="BDD View" />
@@ -91,7 +89,7 @@ export default function BDDUserView({ auth, data, antecedents }) {
                                 </div>
                                 <div className="flex justify-between w-full border-b-1 border-[#71FFFF] border-opacity-40">
                                     <p className="text-white font-bold text-[2vh]">
-                                        {data.GI ? 'Groupe' : 'Branche'}
+                                        {parseInt(data.GI) === 1 ? 'Groupe' : 'Branche'}
                                     </p>
                                     <p className="text-white font-light text-[2vh]">
                                         {data.branche}

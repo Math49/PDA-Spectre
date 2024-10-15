@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('spectre_data', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');  // Clé étrangère pour la table users
-            $table->string('STEAM_ID');
-            $table->unsignedBigInteger('matricule');
+            $table->string('STEAM_ID',17);
+            $table->string('matricule',17);
             $table->unsignedBigInteger('loyauté');
             $table->unsignedBigInteger('vie');
             $table->timestamps();

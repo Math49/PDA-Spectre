@@ -23,9 +23,10 @@ export default function AbsenceAdmin({ auth, absences, users, SpectreData, heade
         users.map((user) => {
             if (user.id !== 1) {
                 SpectreData.map((spectre) => {
-                    if (user.id === absence.user_id && user.id === spectre.user_id) {
+                    if (user.id === parseInt(absence.user_id) && user.id === parseInt(spectre.user_id)) {
                         absenceData.push({
                             ...user,
+                            'abs_id': absence.id,
                             ...absence,
                             ...spectre
                         });
@@ -44,7 +45,7 @@ export default function AbsenceAdmin({ auth, absences, users, SpectreData, heade
     const handleUserSelection = (absence) => {
         setSelectedUser(absence);
     
-        const filteredAntecedents = absences.filter((antecedent) => antecedent.user_id === absence.user_id).reverse();
+        const filteredAntecedents = absences.filter((antecedent) => parseInt(antecedent.user_id) === parseInt(absence.user_id)).reverse();
         
         setAntecedents(filteredAntecedents);
         
@@ -71,7 +72,7 @@ export default function AbsenceAdmin({ auth, absences, users, SpectreData, heade
 
     const handleDelete = () => {
         if (absToDelete) {
-            Inertia.delete(route('deleteAbsence', absToDelete.id));
+            Inertia.delete(route('deleteAbsence', absToDelete.abs_id));
             handleAbsModalClose();
             setSelectedUser(null);
         }

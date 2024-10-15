@@ -8,54 +8,34 @@ import { Inertia } from "@inertiajs/inertia";
 export default function Welcome({ data, auth }) {
     
     const [dimensions, setDimensions] = useState({
-        width: window.innerWidth - 10,
+        width: window.innerWidth,
         height: window.innerHeight,
     });
 
-    // Mise à jour de la taille de la scène lorsque la fenêtre est redimensionnée
+    // Recalculer les positions des cercles sur redimensionnement
+    const recalculateCircles = (width, height) => {
+        return [
+            { id: "circle1", x: width * 0.3, y: height * 0.5, radius: 8, color: "#71FFFF" },
+            { id: "circle2", x: width * 0.3, y: height * 0.65, radius: 8, color: "#71FFFF" },
+            { id: "circle3", x: width * 0.3, y: height * 0.8, radius: 8, color: "#71FFFF" },
+            { id: "circle4", x: width * 0.45, y: height * 0.5, radius: 8, color: "#71FFFF" },
+        ];
+    };
+
+    const [circles, setCircles] = useState(recalculateCircles(dimensions.width, dimensions.height));
+
+    // Met à jour les dimensions et les positions des cercles lorsqu'on redimensionne la fenêtre
     useEffect(() => {
         const handleResize = () => {
-            setDimensions({
-                width: window.innerWidth - 10,
-                height: window.innerHeight,
-            });
+            const newWidth = window.innerWidth;
+            const newHeight = window.innerHeight;
+            setDimensions({ width: newWidth, height: newHeight });
+            setCircles(recalculateCircles(newWidth, newHeight));
         };
 
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
     }, []);
-
-    // Calcul des positions des cercles en fonction de la taille de l'écran
-    const circles = [
-        {
-            id: "circle1",
-            x: dimensions.width * 0.3,
-            y: 320,
-            radius: 8,
-            color: "#71FFFF",
-        },
-        {
-            id: "circle2",
-            x: dimensions.width * 0.3,
-            y: 430,
-            radius: 8,
-            color: "#71FFFF",
-        },
-        {
-            id: "circle3",
-            x: dimensions.width * 0.3,
-            y: 550,
-            radius: 8,
-            color: "#71FFFF",
-        },
-        {
-            id: "circle4",
-            x: dimensions.width * 0.45,
-            y: 400,
-            radius: 8,
-            color: "#71FFFF",
-        },
-    ];
 
     const lines = [
         { points: [circles[0].x, circles[0].y, circles[3].x, circles[3].y] },
@@ -119,8 +99,8 @@ export default function Welcome({ data, auth }) {
                     <div className="absolute w-[100%] h-[80vh] background-default "></div>
                     <div className="w-[40%] flex flex-col px-[2vw] py-[4vh]">
                         <div
-                            className={`absolute top-[320px] right-[${
-                                dimensions.width - dimensions.width * 0.3
+                            className={`absolute top-[${dimensions.height * 0.5}px] right-[${
+                                dimensions.width - dimensions.width * 0.305
                             }px]`}
                         >
                             <p className="px-[1vw] w-min bg-[#00010F] bg-opacity-30 rounded-[8px] text-white font-medium text-[3vh]">
@@ -131,8 +111,8 @@ export default function Welcome({ data, auth }) {
                             </p>
                         </div>
                         <div
-                            className={`absolute top-[430px] right-[${
-                                dimensions.width - dimensions.width * 0.35
+                            className={`absolute top-[${dimensions.height * 0.65}px] right-[${
+                                dimensions.width - dimensions.width * 0.355
                             }px]`}
                         >
                             <p className="px-[1vw] w-min bg-[#00010F] bg-opacity-30 rounded-[8px] text-white font-medium text-[3vh]">
@@ -143,8 +123,8 @@ export default function Welcome({ data, auth }) {
                             </p>
                         </div>
                         <div
-                            className={`absolute top-[550px] right-[${
-                                dimensions.width - dimensions.width * 0.32
+                            className={`absolute top-[${dimensions.height * 0.8}px] right-[${
+                                dimensions.width - dimensions.width * 0.325
                             }px]`}
                         >
                             <p className="px-[1vw] w-min bg-[#00010F] bg-opacity-30 rounded-[8px] text-white font-medium text-[3vh]">

@@ -14,7 +14,7 @@ export default function ConfigHeader({title, data}){
     let avr_loyalty = 0;
 
     data.spectre.map((spectre) => {
-        avr_loyalty += spectre.loyauté;
+        avr_loyalty += parseInt(spectre.loyauté);
     });
 
     avr_loyalty = avr_loyalty / data.spectre.length;
@@ -59,7 +59,7 @@ export default function ConfigHeader({title, data}){
                     </div>
                     <div className='flex flex-col items-center'>
                         <p className='text-white font-normal text-[3vh] opacity-80 text-center'>Loyauté<br></br>moyenne</p>
-                        <p className='text-[#71FFFF] font-bold text-[4vh] text-center'>{avr_loyalty}</p>
+                        <p className='text-[#71FFFF] font-bold text-[4vh] text-center'>{Math.round(avr_loyalty)}</p>
                     </div>
                 </div>
             </div>

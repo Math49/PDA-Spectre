@@ -103,6 +103,8 @@ export default function UsersList({ users, auth, header }) {
                                                     }}
                                                     onChange={(e) => setData('username', e.target.value)}
                                                 />
+                                                <div>
+
                                                 <Input
                                                     type="password"
                                                     variant="underlined"
@@ -117,6 +119,10 @@ export default function UsersList({ users, auth, header }) {
                                                     }}
                                                     onChange={(e) => setData('password', e.target.value)}
                                                 />
+                                                { data.password.length < 8 ? (
+                                                <p className="text-red-600 text-[1.5vh] text-end w-full">8 caractères au minimum</p>
+                                                ) : null }
+                                                </div>
                                                 <Input
                                                     type="password"
                                                     variant="underlined"
@@ -139,6 +145,8 @@ export default function UsersList({ users, auth, header }) {
                                                     label="Steam_ID 64 :"
                                                     labelPlacement="outside-left"
                                                     value={data.STEAM_ID}
+                                                    maxLength={17}
+                                                    minLength={17}
                                                     classNames={{
                                                         base: "justify-end",
                                                         label: "text-white text-[2vh] font-bold group-data-[focus=true]:text-white group-data-[focus=true]:opacity-50 group-data-[filled=true]:text-white group-data-[filled=true]:opacity-100",
@@ -159,6 +167,8 @@ export default function UsersList({ users, auth, header }) {
                                                     variant="underlined"
                                                     label="Matricule :"
                                                     labelPlacement="outside-left"
+                                                    maxLength={17}
+                                                    minLength={1}
                                                     value={data.matricule}
                                                     classNames={{
                                                         base: "justify-end",

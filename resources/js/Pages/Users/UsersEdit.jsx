@@ -3,7 +3,7 @@ import { Head } from '@inertiajs/react';
 import React, { useState, useEffect } from 'react';
 import ConfigHeader from '@/Layouts/ConfigHeader';
 import ConfigContent from '@/Layouts/ConfigContent';
-import { Input, Select, SelectItem, DateInput, Textarea, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from '@nextui-org/react';
+import { Input, Select, SelectItem, DateInput, Textarea, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, cn } from '@nextui-org/react';
 import { Inertia } from '@inertiajs/inertia';
 import { hasPermission } from '@/utils/hasPermission';
 import {now} from "@internationalized/date";
@@ -28,8 +28,11 @@ export default function UsersEdit({ user, auth, data, medals, userMedals, antece
     const [tooltip, setTooltip] = useState({ visible: false, name: '', x: 0, y: 0 });
 
     const medalsList = [];
-    const grades = ['Leader','King','Knight','Mage','Elite','Echo','Nova','Whisper', 'Etat Major'];
-    const specialisations = ['Executor','Guardian','Ghost','Spirits','Sector', 'N/A'];
+    const grades = ['Leader','King','Knight','Mage','Elite','Echo','Nova','Whisper','Etat Major'];
+    const specialisations = ['Executor','Guardian','Ghost','Spirits','Sector','N/A'];
+
+    console.log(user.roles);
+    console.log(formData.grade);
 
     medals.map((medal) => {
         if(medal.role == user.roles[1].id || medal.role == 0) {
@@ -58,7 +61,6 @@ export default function UsersEdit({ user, auth, data, medals, userMedals, antece
             vie: newVie,
         });
     };
-
 
     useEffect(() => {
         if (formData.grade !== user.roles[0]?.name || formData.specialisation !== user.roles[1]?.name || formData.matricule !== data.matricule) {
@@ -164,15 +166,15 @@ export default function UsersEdit({ user, auth, data, medals, userMedals, antece
                                                 label="Grade :"
                                                 labelPlacement="outside-left"
                                                 fullWidth={true}
-                                                value={formData.grade}
+                                                value={grades.includes(formData.grade) ? formData.grade : grades[0]} // Assure que la valeur est valide
                                                 defaultSelectedKeys={[formData.grade]}
+                                                disallowEmptySelection={true}
                                                 classNames={{
                                                     base: "justify-between h-[5vh]",
                                                     label: "text-white font-bold group-data-[focus=true]:text-white group-data-[focus=true]:opacity-50 group-data-[filled=true]:text-white group-data-[filled=true]:opacity-100 text-[1.8vh]",
                                                     value: "!text-white group-data-[focus=true]:text-white group-data-[filled=true]:text-white text-right text-[1.8vh]",
                                                     mainWrapper: "w-[70%]",
                                                     trigger: "text-[#71FFFF]",
-
                                                 }}
                                                 onChange={(e) => handleChange('grade', e.target.value)}
                                             >
@@ -182,20 +184,21 @@ export default function UsersEdit({ user, auth, data, medals, userMedals, antece
                                                     </SelectItem>
                                                 ))}
                                             </Select>
+
                                             <Select
                                                 variant="underlined"
                                                 label="Spécialité :"
                                                 labelPlacement="outside-left"
                                                 fullWidth={true}
-                                                value={formData.specialisation}
+                                                value={specialisations.includes(formData.specialisation) ? formData.specialisation : specialisations[0]} // Assure que la valeur est valide
                                                 defaultSelectedKeys={[formData.specialisation]}
+                                                disallowEmptySelection={true}
                                                 classNames={{
                                                     base: "justify-between h-[5vh]",
                                                     label: "text-white font-bold group-data-[focus=true]:text-white group-data-[focus=true]:opacity-50 group-data-[filled=true]:text-white group-data-[filled=true]:opacity-100 text-[1.8vh]",
                                                     value: "!text-white group-data-[focus=true]:text-white group-data-[filled=true]:text-white text-right text-[1.8vh]",
                                                     mainWrapper: "w-[60%]",
                                                     trigger: "text-[#71FFFF]",
-
                                                 }}
                                                 onChange={(e) => handleChange('specialisation', e.target.value)}
                                             >
@@ -205,6 +208,7 @@ export default function UsersEdit({ user, auth, data, medals, userMedals, antece
                                                     </SelectItem>
                                                 ))}
                                             </Select>
+
                                             <Input
                                                 type="number"
                                                 variant="underlined"

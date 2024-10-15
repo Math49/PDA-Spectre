@@ -46,7 +46,7 @@ export default function LoyauteView({ auth, users, SpectreData, header }) {
     users.map((user) => {
         if (user.id !== 1) {
             SpectreData.map((spectre) => {
-                if (user.id === spectre.user_id) {
+                if (user.id === parseInt(spectre.user_id)) {
                     userData.push({
                         ...user,
                         ...spectre
@@ -65,6 +65,7 @@ export default function LoyauteView({ auth, users, SpectreData, header }) {
     const [selectedBonus, setSelectedBonus] = useState(null);
 
     const handleSelectBonus = (e) => {
+        setPoints(0);
         setSelectedBonus(e.target.value);
     }
 
@@ -76,6 +77,13 @@ export default function LoyauteView({ auth, users, SpectreData, header }) {
             
             loyaute = selectedUser.loyauté + points;
             
+            if (loyaute > 100) {
+                loyaute = 100;
+            }
+            if (loyaute < -100) {
+                loyaute = -100;
+            }
+
             Inertia.post(route('updateLoyaute', selectedUser.user_id), {
                 loyaute: loyaute,
                 raison: selectedReason,

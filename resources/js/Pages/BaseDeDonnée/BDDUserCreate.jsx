@@ -208,7 +208,7 @@ export default function BDDUserCreate({ auth }) {
                                         onChange={(e) => setData('groupe', e.target.value)}
                                     />
                                     <Input
-                                        type="number"
+                                        type="text"
                                         variant="underlined"
                                         label="Steam_ID :"
                                         labelPlacement="outside-left"
@@ -247,12 +247,11 @@ export default function BDDUserCreate({ auth }) {
                                 ) : (
                                     
                                     <label htmlFor="images" className="flex flex-col justify-center items-center gap-[10px] p-[2vh] border-dashed border-[2px] border-[#71FFFF] border-opacity-50 text-[#71FFFF] text-opacity-50 hover:bg-[#314E59] hover:bg-opacity-30 cursor-pointer" id="dropcontainer">
-                                    <span className='text-[#71FFFF] font-bold opacity-80'>Déposer la photo</span>
+                                    <span className='text-[#71FFFF] font-bold opacity-80'>Importer la photo</span>
                                     ou
                                     <input
                                     type="file"
                                     id="images"
-                                    value={data.steam_id}
                                     className='block w-full text-sm text-slate-500
                                         file:cursor-pointer
                                         cursor-pointer

@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class SpectreData extends Model
 {
     protected $fillable = [
-        'user_id' => 'interger',
-        'STEAM_ID' => 'string',
-        'matricule' => 'interger',
-        'loyauté' => 'interger',
-        'vie' => 'interger',
+        'user_id',
+        'STEAM_ID',
+        'matricule',
+        'loyauté',
+        'vie',
     ];
 
     public function user()

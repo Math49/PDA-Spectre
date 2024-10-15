@@ -237,7 +237,9 @@ class Spectre_Data extends Controller
 
     public function useredit($id)
     {
-        $user = User::with('roles')->find($id);
+        $user = User::with(['roles' => function($query) {
+            $query->orderBy('id', 'asc');
+        }])->find($id);
         $data = SpectreData::where('user_id', $id)->first();
         $medal = Medal::all();
         $userMedals = UserMedal::where('user_id', $id)->get();
@@ -264,14 +266,16 @@ class Spectre_Data extends Controller
 
 
         foreach ($userRole as $role) {
-            $photoUser = PhotoUser::where('role_accept', $role->name)->first();
+            if (PhotoUser::where('role_accept', $role->name)->first()) {
+                $photoUser = PhotoUser::where('role_accept', $role->name)->first();
+                $photoUser = $photoUser->lien;
+            }
         }
-
-        if ($photoUser) {
-            $photoUser = $photoUser->lien;
-        } else {
+        if (!$photoUser) {
+            
             $photoUser = PhotoUser::where('role_accept', '')->first()->lien;
         }
+        
 
         foreach ($roles as $role) {
             $photoAuth = PhotoUser::where('role_accept', $role->name)->first();
@@ -321,7 +325,8 @@ class Spectre_Data extends Controller
         ]);
 
         $data = $request->data;
-        $user = User::findOrFail($id);
+
+        $user = User::with('roles')->findOrFail($id);
         $user->save();
 
         $spectre = SpectreData::where('user_id', $id)->first();
@@ -335,17 +340,23 @@ class Spectre_Data extends Controller
             $spectreData->save();
         }
 
+
         if ($data['grade'] || $data['specialisation']) {
             $roles = [];
             if ($data['grade']) {
                 $roles[0] = $data['grade'];
             }
+            else{
+                $roles[0] = $user->roles[0]->name;
+            }
             if ($data['specialisation']) {
                 $roles[1] = $data['specialisation'];
             }
-            $user->syncRoles($roles);
+            else{
+                $roles[1] = $user->roles[1]->name;
+            }
         }
-
+        $user->syncRoles($roles);
 
         $historique = new historique();
         $historique->user_id = Auth::id();
@@ -355,7 +366,7 @@ class Spectre_Data extends Controller
 
         return redirect()->route('editUser', [
             'id' => $id,
-    ])->with('success', 'SPECTRE-' . $spectre->matricule . ' modifié avec succès');
+            ])->with('success', 'SPECTRE-' . $spectre->matricule . ' modifié avec succès');
     }
 
     public function updateUserMedal(Request $request, $id)
@@ -745,6 +756,7 @@ class Spectre_Data extends Controller
         $historique->description = "Suppression de l'absence de SPECTRE-" . $spectreData->matricule;
         $historique->save();
 
+
         return redirect()->route('absenceAdmin')->with('success','Absence de SPECTRE-' . $spectreData->matricule . ' supprimée avec succès');
     }
 
@@ -837,11 +849,11 @@ class Spectre_Data extends Controller
             'nom' => 'required|string',
             'prenom' => 'required|string',
             'grade' => 'required|string',
-            'matricule' => 'required|numeric',
+            'matricule' => 'required|string|max:17',
             'branche' => 'required|string',
             'GI' => 'required|boolean',
             'groupe' => 'required|string',
-            'steamid' => 'required|numeric',
+            'steamid' => 'required|string|size:17',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
         
@@ -1125,11 +1137,11 @@ class Spectre_Data extends Controller
             'nom' => 'required|string',
             'prenom' => 'required|string',
             'grade' => 'required|string',
-            'matricule' => 'required|numeric',
+            'matricule' => 'required|string|max:17',
             'branche' => 'required|string',
             'GI' => 'required|boolean',
             'groupe' => 'required|string',
-            'steamid' => 'required|numeric',
+            'steamid' => 'required|string|size:17',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
         

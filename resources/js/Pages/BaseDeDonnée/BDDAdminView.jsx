@@ -24,7 +24,7 @@ export default function BDDAdminView({ auth, data, antecedents, header }) {
     });
     
     const [isDirty, setIsDirty] = useState(false);
-    const status = ["N/A", "Surveillance", "Recherché", "Mort"];
+    const status = ["N/A", "Vivant", "Surveillance", "Recherché", "Capturé", "VIP", "HVT", "Mort"];
 
     // Détecte les changements manuels
     const handleChange = (field, value) => {
@@ -180,16 +180,16 @@ export default function BDDAdminView({ auth, data, antecedents, header }) {
                                             <Input
                                                 type="text"
                                                 variant="underlined"
-                                                label={data.GI ? 'Groupe :' : 'Branche :'}
+                                                label={parseInt(data.GI) === 1 ? 'Groupe :' : 'Branche :'}
                                                 labelPlacement="outside-left"
-                                                value={data.GI ? formData.groupe : formData.branche}
+                                                value={parseInt(data.GI) === 1 ? formData.groupe : formData.branche}
                                                 classNames={{
                                                     base: "justify-between h-[5vh]",
                                                     mainWrapper: "w-[60%]",
                                                     label: "text-white font-bold group-data-[focus=true]:text-white group-data-[focus=true]:opacity-50 group-data-[filled=true]:text-white group-data-[filled=true]:opacity-100 text-[1.8vh]",
                                                     input: "!text-white group-data-[focus=true]:text-white group-data-[filled=true]:text-white text-right text-[1.8vh]",
                                                 }}
-                                                onChange={(e) => handleChange(`${data.GI ? 'groupe' : 'branche :'}`, e.target.value)}
+                                                onChange={(e) => handleChange(`${parseInt(data.GI) === 1 ? 'groupe' : 'branche :'}`, e.target.value)}
                                             />
                                             
 
