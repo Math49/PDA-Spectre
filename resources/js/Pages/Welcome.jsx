@@ -99,9 +99,9 @@ export default function Welcome({ data, auth }) {
                     <div className="absolute w-[100%] h-[80vh] background-default "></div>
                     <div className="w-[40%] flex flex-col px-[2vw] py-[4vh]">
                         <div
-                            className={`absolute top-[${dimensions.height * 0.5}px] right-[${
+                            className={`absolute flex flex-col items-end top-[${dimensions.height * 0.5}px] right-[${
                                 dimensions.width - dimensions.width * 0.305
-                            }px]`}
+                            }px] `}
                         >
                             <p className="px-[1vw] w-min bg-[#00010F] bg-opacity-30 rounded-[8px] text-white font-medium text-[3vh]">
                                 Matricule
@@ -111,8 +111,8 @@ export default function Welcome({ data, auth }) {
                             </p>
                         </div>
                         <div
-                            className={`absolute top-[${dimensions.height * 0.65}px] right-[${
-                                dimensions.width - dimensions.width * 0.355
+                            className={`absolute flex flex-col items-end top-[${dimensions.height * 0.65}px] right-[${
+                                dimensions.width - dimensions.width * 0.305
                             }px]`}
                         >
                             <p className="px-[1vw] w-min bg-[#00010F] bg-opacity-30 rounded-[8px] text-white font-medium text-[3vh]">
@@ -123,8 +123,8 @@ export default function Welcome({ data, auth }) {
                             </p>
                         </div>
                         <div
-                            className={`absolute top-[${dimensions.height * 0.8}px] right-[${
-                                dimensions.width - dimensions.width * 0.325
+                            className={`absolute flex flex-col items-end top-[${dimensions.height * 0.8}px] right-[${
+                                dimensions.width - dimensions.width * 0.305
                             }px]`}
                         >
                             <p className="px-[1vw] w-min bg-[#00010F] bg-opacity-30 rounded-[8px] text-white font-medium text-[3vh]">

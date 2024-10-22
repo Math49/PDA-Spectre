@@ -13,7 +13,12 @@ export default function NotificationPopup() {
             setShowPopup(true);
             setIsAnimating(true);
             // Désactiver l'animation après la fin de l'animation (exemple 0.5s)
-            setTimeout(() => setIsAnimating(false), 10000);
+            setTimeout(() => { 
+                setIsAnimating(false)
+            }, 10000);
+            setTimeout(() => {
+                setShowPopup(false);
+            }, 11000);
         }
     }, [flash]);
 

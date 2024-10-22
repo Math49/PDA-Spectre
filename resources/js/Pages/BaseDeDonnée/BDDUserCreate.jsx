@@ -24,6 +24,7 @@ export default function BDDUserCreate({ auth }) {
     });
 
     let [GI, setGI] = useState(false);
+    let [sending, setSending] = useState(false);
 
 
     const handleGI = (value) => () => {
@@ -51,6 +52,7 @@ export default function BDDUserCreate({ auth }) {
 
     const submit = (e) => {
         e.preventDefault();
+        setSending(true);
         setData('GI', GI);
         Inertia.post(route('BDDUserStore'),{
             'nom': data.nom,
@@ -213,6 +215,8 @@ export default function BDDUserCreate({ auth }) {
                                         label="Steam_ID :"
                                         labelPlacement="outside-left"
                                         value={data.steamid}
+                                        maxLength={17}
+                                        minLength={17}
                                         classNames={{
                                             base: "justify-end",
                                             label: "text-white text-[2vh] font-bold group-data-[focus=true]:text-white group-data-[focus=true]:opacity-50 group-data-[filled=true]:text-white group-data-[filled=true]:opacity-100",
@@ -265,8 +269,12 @@ export default function BDDUserCreate({ auth }) {
                                 </label>
                                 )}
                                 </div>
-                                <button className={`ms-4 bg-gradient-to-br from-[#5E7F8C] to-[#314E59] text-white font-bold rounded-[20px] text-[3vh] h-[6.5vh] w-[80%] ${isFormValid() ? '' : 'opacity-50'}`} disabled={!isFormValid() || processing}>
-                                    {isFormValid() ? 'Création' : 'Disabled'}
+                                <button className={`ms-4 bg-gradient-to-br from-[#5E7F8C] to-[#314E59] text-white font-bold rounded-[20px] text-[3vh] h-[6.5vh] w-[80%] ${isFormValid() || sending ? '' : 'opacity-50'}`} disabled={!isFormValid() || processing || sending}
+                                >
+
+                                    {sending ? 'Envoi...' :
+                                        isFormValid() ? 'Création' : 'Disabled'
+                                    }
                                 </button>
                             </div>
                         </form>

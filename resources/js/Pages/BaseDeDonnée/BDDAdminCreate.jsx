@@ -26,7 +26,7 @@ export default function BDDAdminCreate  ({ auth, header }) {
     });
 
     let [GI, setGI] = useState(false);
-
+    let [sending, setSending] = useState(false);
 
     const handleGI = (value) => () => {
         setGI(value);
@@ -53,6 +53,7 @@ export default function BDDAdminCreate  ({ auth, header }) {
 
     const submit = (e) => {
         e.preventDefault();
+        setSending(true);
         setData('GI', GI);
         Inertia.post(route('AddAdminBDDStore'),{
             'nom': data.nom,
@@ -275,8 +276,11 @@ export default function BDDAdminCreate  ({ auth, header }) {
                                     </label>
                                     )}
                                     </div>
-                                    <button className={`ms-4 bg-gradient-to-br from-[#5E7F8C] to-[#314E59] text-white font-bold rounded-[20px] text-[3vh] h-[6.5vh] w-[80%] ${isFormValid() ? '' : 'opacity-50'}`} disabled=     {!isFormValid() || processing}>
-                                        {isFormValid() ? 'Création' : 'Disabled'}
+                                    <button className={`ms-4 bg-gradient-to-br from-[#5E7F8C] to-[#314E59] text-white font-bold rounded-[20px] text-[3vh] h-[6.5vh] w-[80%] ${isFormValid() || sending ? '' : 'opacity-50'}`} disabled=     {!isFormValid() || processing || sending}
+                                    >
+                                        {sending ? 'Envoi...' : 
+                                            isFormValid() ? 'Création' : 'Disabled'
+                                        }   
                                     </button>
                                 </div>
                             </form>

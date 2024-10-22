@@ -1,7 +1,7 @@
 import { Link, Head } from '@inertiajs/react';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import UserHeader from '@/Layouts/UserHeader';
-import { Input, Textarea } from "@nextui-org/react";
+import { Textarea } from "@nextui-org/react";
 import { DateInput } from "@nextui-org/date-input";
 import { Inertia } from '@inertiajs/inertia';
 import NotificationPopup from '@/Components/NotificationPopup';
@@ -13,12 +13,27 @@ export default function AbsenceUser({ auth }) {
     const [dateStart, setDateStart] = useState(null);
     const [dateEnd, setDateEnd] = useState(null);
     const [reason, setReason] = useState(null);
+    const [submitDisabled, setSubmitDisabled] = useState(true);
+    const [isEndDateDisabled, setIsEndDateDisabled] = useState(true);
+
+    useEffect(() => {
+        if (dateStart && dateEnd && reason) {
+            setSubmitDisabled(false);
+        } else {
+            setSubmitDisabled(true);
+        }
+    }, [dateStart, dateEnd, reason]);
 
     const handleDateStart = (e) => {
         if (e.year && e.month && e.day) {
             const localDate = new Date(e.year, e.month - 1, e.day);
             const formattedDate = new Date(localDate.getTime() - (localDate.getTimezoneOffset() * 60000)).toISOString().split('T')[0];
             setDateStart(formattedDate);
+            setIsEndDateDisabled(false); 
+
+            if (dateEnd && formattedDate > dateEnd) {
+            setDateEnd(null);
+            }
         }
     };
     
@@ -26,7 +41,9 @@ export default function AbsenceUser({ auth }) {
         if (e.year && e.month && e.day) {
             const localDate = new Date(e.year, e.month - 1, e.day);
             const formattedDate = new Date(localDate.getTime() - (localDate.getTimezoneOffset() * 60000)).toISOString().split('T')[0];
-            setDateEnd(formattedDate);
+            if (formattedDate >= dateStart) {
+                setDateEnd(formattedDate);
+            }
         }
     };
 
@@ -38,9 +55,10 @@ export default function AbsenceUser({ auth }) {
                 'dateEnd': dateEnd,
                 'raison': reason
             });
-
         } else {
+            
             alert("Veuillez remplir tous les champs.");
+            
         }
     };
 
@@ -76,6 +94,7 @@ export default function AbsenceUser({ auth }) {
                                             aria-label='dateEnd'
                                             labelPlacement="outside-left"
                                             onChange={handleDateEnd}
+                                            disabled={isEndDateDisabled}
                                             classNames={{
                                                 base: "w-[30%] min-w-min",
                                                 inputWrapper: "background-blue",
@@ -84,8 +103,8 @@ export default function AbsenceUser({ auth }) {
                                         />
                                     </div>
                                     <div className='flex justify-center items-center'>
-                                        <button className="ms-4 bg-[#71FFFF] text-[#292929] font-bold rounded-[20px] w-[10vw] h-[5vh] text-[3vh]">
-                                            Signaler
+                                        <button className={`ms-4 bg-[#71FFFF] text-[#292929] font-bold rounded-[20px] w-[10vw] h-[5vh] text-[3vh] ${submitDisabled ? "opacity-50" : ""} `} disabled={submitDisabled}>
+                                            {submitDisabled ? 'Disabled' : 'Création'}
                                         </button>
                                     </div>
                                 </div>

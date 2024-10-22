@@ -20,7 +20,7 @@ export default function BDDUserList({ auth, users, SpectreData, BDD }) {
             <main className='w-full h-full overflow-hidden'>
                 <div className='flex flex-col py-[2vh] px-[2vw] h-full gap-[2vh]'>
                     <div className='flex w-full justify-center'>
-                        <h3 className='text-white font-bold text-[4vh]'>Base de Donnée</h3>
+                        <h3 className='text-white font-bold text-[4vh]'>Base de Données</h3>
                     </div>
                     <div className='h-min'>
                         {hasPermission(auth, 'addBDD') ? (

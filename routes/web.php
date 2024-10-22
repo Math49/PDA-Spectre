@@ -104,7 +104,7 @@ Route::middleware('auth', 'can:dashboard')->group(function () {
         Route::post('/dashboard/BDD/AdminCreate/store', [Spectre_Data::class, 'AddAdminBDDStore'])->name('AddAdminBDDStore');
     });
 
-    Route::middleware('auth', 'can:viewAll')->group(function () {
+    Route::middleware('auth', 'can:deleteBDD')->group(function () {
         Route::delete('/dashboard/BDD/{id}/delete', [Spectre_Data::class, 'deleteBDD'])->name('deleteBDD');
     });
 

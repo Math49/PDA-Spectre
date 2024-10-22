@@ -63,13 +63,13 @@ class RolePermissionSeeder extends Seeder
         $roleLeader->givePermissionTo(Permission::all());
 
         $roleKing = Role::create(['name' => 'King']);
-        $roleKing->givePermissionTo(['officer', 'dashboard', 'viewBDD', 'viewAbsence', 'viewUser', 'editUser', 'editMedailles', 'editBDD', 'editAntecedentsBDD', 'editAntecedentsUser']);
+        $roleKing->givePermissionTo(['officer', 'dashboard', 'viewBDD', 'addBDD', 'viewAbsence', 'viewUser', 'editUser', 'editMedailles', 'editBDD', 'editAntecedentsBDD', 'editAntecedentsUser', 'deleteBDD']);
 
         $roleKnight = Role::create(['name' => 'Knight']);
-        $roleKnight->givePermissionTo(['officer', 'dashboard', 'viewBDD', 'viewAbsence', 'viewUser', 'editUser', 'editMedailles', 'editBDD', 'editAntecedentsBDD', 'editAntecedentsUser']);
+        $roleKnight->givePermissionTo(['officer', 'dashboard', 'viewBDD', 'addBDD', 'viewAbsence', 'viewUser', 'editUser', 'editMedailles', 'editBDD', 'editAntecedentsBDD', 'editAntecedentsUser']);
 
         $roleMage = Role::create(['name' => 'Mage']);
-        $roleMage->givePermissionTo(['officer', 'dashboard', 'viewBDD', 'viewAbsence', 'viewUser', 'editMedailles', 'editBDD', 'editAntecedentsBDD']);
+        $roleMage->givePermissionTo(['officer', 'dashboard', 'viewBDD', 'addBDD', 'viewAbsence', 'viewUser', 'editMedailles', 'editBDD', 'editAntecedentsBDD']);
 
         $roleElite = Role::create(['name' => 'Elite']);
         $roleElite->givePermissionTo(['addAbsence', 'addBDD', 'editAntecedentsBDD']);
@@ -86,13 +86,13 @@ class RolePermissionSeeder extends Seeder
         // Création des Rôles de Spécialisation
 
         $roleExecutor = Role::create(['name' => 'Executor']);
-        $roleExecutor->givePermissionTo(['loyaute', 'editBDD', 'dashboard']);
+        $roleExecutor->givePermissionTo(['loyaute', 'viewBDD', 'editBDD', 'dashboard']);
 
         $roleGuardian = Role::create(['name' => 'Guardian']);
         $roleGuardian->givePermissionTo([]);
 
         $roleGhost = Role::create(['name' => 'Ghost']);
-        $roleGhost->givePermissionTo(['editBDD']);
+        $roleGhost->givePermissionTo(['dashboard', 'viewBDD','editBDD']);
 
         $roleSpirits = Role::create(['name' => 'Spirits']);
         $roleSpirits->givePermissionTo([]);

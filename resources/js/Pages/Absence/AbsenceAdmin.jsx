@@ -13,22 +13,38 @@ import NotificationPopup from '@/Components/NotificationPopup';
 
 
 
-export default function AbsenceAdmin({ auth, absences, users, SpectreData, header }) {
+export default function AbsenceAdmin({ auth, absences, users, SpectreData, header, photos }) {
 
     
     let absenceData = [];
     let today = dayjs(now()).format('YYYY-MM-DD');
+    let Userphoto = null;
 
     absences.map((absence) => {
         users.map((user) => {
             if (user.id !== 1) {
                 SpectreData.map((spectre) => {
                     if (user.id === parseInt(absence.user_id) && user.id === parseInt(spectre.user_id)) {
+                        
+
+                        photos.map((photo) => {
+                            user.roles.map((role) => {
+                                if (role.name == photo.role_accept){
+                                    Userphoto = photo.lien;
+                                }
+                            });
+                        });
+            
+                        if (Userphoto == null) {
+                            Userphoto = photos[0].lien;
+                        }
+
                         absenceData.push({
                             ...user,
                             'abs_id': absence.id,
                             ...absence,
-                            ...spectre
+                            ...spectre,
+                            'Userphoto': Userphoto
                         });
                     }
                 });
@@ -38,12 +54,16 @@ export default function AbsenceAdmin({ auth, absences, users, SpectreData, heade
     
     absenceData = absenceData.reverse();
 
+    console.log(absenceData);
+
     const [selectedUser, setSelectedUser] = useState(null);
     const [antecedents, setAntecedents] = useState(null);
     const [eventcalendar, setEventCalendar] = useState(null);
 
     const handleUserSelection = (absence) => {
         setSelectedUser(absence);
+
+        console.log(selectedUser);
     
         const filteredAntecedents = absences.filter((antecedent) => parseInt(antecedent.user_id) === parseInt(absence.user_id)).reverse();
         
@@ -52,7 +72,7 @@ export default function AbsenceAdmin({ auth, absences, users, SpectreData, heade
         const events = filteredAntecedents.map((antecedent) => ({
             title: antecedent.raison,
             start: antecedent.date_debut,
-            end: antecedent.date_fin,
+            end: dayjs(antecedent.date_fin).add(1, 'day').format('YYYY-MM-DD'),
             allDay: true
         }));
     
@@ -97,7 +117,7 @@ export default function AbsenceAdmin({ auth, absences, users, SpectreData, heade
                                 key={`${absence.id}-${index}`}
                             >
                                 <p className={`font-bold text-[2vh] ${dayjs(absence.date_fin).isBefore(dayjs()) ? 'opacity-50' : 'text-white'}`}>
-                                    {absence.roles[1].name} {absence.roles[0].name}-{absence.matricule}
+                                    {absence.roles[0].name}-{absence.matricule} {absence.roles[1].name}
                                 </p>
                                 <p className={`font-tiny text-[2vh] ${dayjs(absence.date_fin).isBefore(dayjs()) ? 'opacity-50' : 'opacity-80 text-white'}`}>
                                     {dayjs(absence.date_debut).format('DD/MM/YYYY')} - {dayjs(absence.date_fin).format('DD/MM/YYYY')}
@@ -111,11 +131,12 @@ export default function AbsenceAdmin({ auth, absences, users, SpectreData, heade
                             {selectedUser ? (
                                 <>
                                     <div className='flex flex-col items-center'>
-                                        <p className="text-white font-light text-[2.5vh]">ID: {selectedUser.STEAM_ID}</p>
-                                        <div className="background-edit w-[35vh] h-[35vh]">
-                                            <div className="background-filter w-full h-full"></div>
-                                        </div>
+                                    <p className="text-white font-light text-[2.5vh]">ID: {selectedUser.STEAM_ID}</p>
+                                    <div className="relative background-mountain w-[35vh] h-[35vh] overflow-hidden">
+                                        <img src={selectedUser.Userphoto} alt="" className="w-full pt-[5vh] px-[1vw] object-cover rounded-[20px]"/>
+                                        <div className="absolute top-0 background-filter w-full h-full"></div>
                                     </div>
+                                </div>
                                     <div className='flex flex-col gap-[2vh] w-[25%]'>
                                         <div className='background-blue shadow-[0_4px_4px_0_#5E7F8C] rounded-[20px] px-[2vw] py-[3vh] flex flex-col items-center justify-center gap-[2vh] w-full'>
                                             <div className='flex justify-between w-full border-b-1 border-[#71FFFF] border-opacity-40'>

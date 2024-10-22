@@ -26,25 +26,23 @@ export default function BDDAdminView({ auth, data, antecedents, header }) {
     const [isDirty, setIsDirty] = useState(false);
     const status = ["N/A", "Vivant", "Surveillance", "Recherché", "Capturé", "VIP", "HVT", "Mort"];
 
-    // Détecte les changements manuels
+    
     const handleChange = (field, value) => {
         setFormData((prevFormData) => ({
             ...prevFormData,
             [field]: value,
         }));
-        setIsDirty(true); // Indique qu'il y a un changement
+        setIsDirty(true);
     };
 
-    // Détecte lorsque formData change et met à jour après un délai
     useEffect(() => {
         if (isDirty) {
             const timeout = setTimeout(() => {
-                // Effectuer la mise à jour après une pause (ex: 500ms)
                 Inertia.put(route('BDDAdminUpdate', data.id), { data: formData });
-                setIsDirty(false); // Remet à false après la mise à jour
-            }, 1000); // Délai avant de déclencher la requête PUT
+                setIsDirty(false);
+            }, 1000);
             
-            return () => clearTimeout(timeout); // Annule le timeout si un nouveau changement intervient
+            return () => clearTimeout(timeout);
         }
     }, [formData, isDirty]);
 
@@ -189,7 +187,7 @@ export default function BDDAdminView({ auth, data, antecedents, header }) {
                                                     label: "text-white font-bold group-data-[focus=true]:text-white group-data-[focus=true]:opacity-50 group-data-[filled=true]:text-white group-data-[filled=true]:opacity-100 text-[1.8vh]",
                                                     input: "!text-white group-data-[focus=true]:text-white group-data-[filled=true]:text-white text-right text-[1.8vh]",
                                                 }}
-                                                onChange={(e) => handleChange(`${parseInt(data.GI) === 1 ? 'groupe' : 'branche :'}`, e.target.value)}
+                                                onChange={(e) => handleChange(parseInt(data.GI) === 1 ? 'groupe' : 'branche', e.target.value)}
                                             />
                                             
 
@@ -265,7 +263,9 @@ export default function BDDAdminView({ auth, data, antecedents, header }) {
                                                     key={antecedent.id}
                                                     className="relative flex text-warp h-[20vh] text-[2vh]"
                                                 >   
+                                                {hasPermission(auth, "deleteBDD") ? (
                                                     <Button onPress={() => { setAntToDelete(antecedent.id); onOpenChange(); }} className='text-red-600 text-[2vh] cursor-pointer p-0 min-w-0 h-auto bg-transparent rounded-none align-middle hover:!opacity-100 absolute top-1 z-20'><i class="fa-solid fa-trash"></i></Button>
+                                                ) : null}
                                                     <p className="text-white opacity-50 w-[20%] text-center">
                                                         {antecedent.id}
                                                     </p>

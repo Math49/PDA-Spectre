@@ -28,11 +28,14 @@ export default function UsersEdit({ user, auth, data, medals, userMedals, antece
     const [tooltip, setTooltip] = useState({ visible: false, name: '', x: 0, y: 0 });
 
     const medalsList = [];
-    const grades = ['Leader','King','Knight','Mage','Elite','Echo','Nova','Whisper','Etat Major'];
+    let grades = ['King','Knight','Mage','Elite','Echo','Nova','Whisper'];
     const specialisations = ['Executor','Guardian','Ghost','Spirits','Sector','N/A'];
 
-    console.log(user.roles);
-    console.log(formData.grade);
+
+
+    if (auth.user.roles[0] == 'Leader' || auth.user.roles[0] == 'Hockwood') {
+        grades = ['Leader','King','Knight','Mage','Elite','Echo','Nova','Whisper','Etat Major'];
+    }
 
     medals.map((medal) => {
         if(medal.role == user.roles[1].id || medal.role == 0) {

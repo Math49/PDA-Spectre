@@ -31,6 +31,7 @@ class Spectre_Data extends Controller
 
 
         $roles = Auth::user()->roles;
+        $roles = $roles->sortBy('id');
         $permissions = $roles->flatMap(function ($role) {
             return $role->permissions->pluck('name');
         })->unique();
@@ -40,15 +41,19 @@ class Spectre_Data extends Controller
 
         foreach ($roles as $role) {
 
-            $photoUser = PhotoUser::where('role_accept', $role->name)->first();
-
+            if(!$photoUser) {
+                $photoUser = PhotoUser::where('role_accept', $role->name)->first();
+            }
         }
+
+        
 
         if ($photoUser) {
             $photoUser = $photoUser->lien;
         } else {
             $photoUser = PhotoUser::where('role_accept', '')->first()->lien;
         }
+
 
         $data = [
             'spectre' => $spectre,
@@ -81,10 +86,14 @@ class Spectre_Data extends Controller
         $SpectreData = SpectreData::all();
         $absences = Absence::all();
         $BDD = BaseDeDonnee::all();
-        $users = User::with('roles')->get();
-        
-        
+        $users = User::with(['roles' => function($query) {
+            $query->orderBy('id', 'asc');
+        }])->get();
+                
         $roles = Auth::user()->roles;
+
+        $roles = $roles->sortBy('id');
+        
         $permissions = $roles->flatMap(function ($role) {
             return $role->permissions->pluck('name');
         })->unique();
@@ -93,7 +102,9 @@ class Spectre_Data extends Controller
 
         foreach ($roles as $role) {
 
-            $photoUser = PhotoUser::where('role_accept', $role->name)->first();
+            if(!$photoUser) {
+                $photoUser = PhotoUser::where('role_accept', $role->name)->first();
+            }
 
         }
 
@@ -131,7 +142,9 @@ class Spectre_Data extends Controller
 
     public function userlist()
     {
-        $users = User::with('roles')->get();
+        $users = User::with(['roles' => function($query) {
+            $query->orderBy('id', 'asc');
+        }])->get();
         $SpectreData = SpectreData::all();
         $absences = Absence::all();
         $BDD = BaseDeDonnee::all();
@@ -143,12 +156,17 @@ class Spectre_Data extends Controller
         $historique->save();
 
         $roles = Auth::user()->roles;
+        $roles = $roles->sortBy('id');
         $permissions = $roles->flatMap(function ($role) {
             return $role->permissions->pluck('name');
         })->unique();
 
+        $photoUser = null;
+
         foreach ($roles as $role) {
-            $photoUser = PhotoUser::where('role_accept', $role->name)->first();
+            if(!$photoUser) {
+                $photoUser = PhotoUser::where('role_accept', $role->name)->first();
+            }
         }
 
         if ($photoUser) {
@@ -188,19 +206,26 @@ class Spectre_Data extends Controller
     public function usercreate()
     {
 
-        $users = User::with('roles')->get();
+        $users = User::with(['roles' => function($query) {
+            $query->orderBy('id', 'asc');
+        }])->get();
         $SpectreData = SpectreData::all();
         $absences = Absence::all();
         $BDD = BaseDeDonnee::all();
 
         $roles = Auth::user()->roles;
+        $roles = $roles->sortBy('id');
         $permissions = $roles->flatMap(function ($role) {
             return $role->permissions->pluck('name');
         })->unique();
 
+        $photoUser = null;
+
         foreach ($roles as $role) {
 
-            $photoUser = PhotoUser::where('role_accept', $role->name)->first();
+            if(!$photoUser) {
+                $photoUser = PhotoUser::where('role_accept', $role->name)->first();
+            }
 
         }
 
@@ -248,9 +273,12 @@ class Spectre_Data extends Controller
         $SpectreData = SpectreData::all();
         $absences = Absence::all();
         $BDD = BaseDeDonnee::all();
-        $users = User::with('roles')->get();
+        $users = User::with(['roles' => function($query) {
+            $query->orderBy('id', 'asc');
+        }])->get();
 
         $roles = Auth::user()->roles;
+        $roles = $roles->sortBy('id');
         $permissions = $roles->flatMap(function ($role) {
             return $role->permissions->pluck('name');
         })->unique();
@@ -276,9 +304,12 @@ class Spectre_Data extends Controller
             $photoUser = PhotoUser::where('role_accept', '')->first()->lien;
         }
         
+        $photoAuth = null;
 
         foreach ($roles as $role) {
-            $photoAuth = PhotoUser::where('role_accept', $role->name)->first();
+            if(!$photoAuth) {
+                $photoAuth = PhotoUser::where('role_accept', $role->name)->first();
+            }
         }
 
         if ($photoAuth) {
@@ -326,7 +357,9 @@ class Spectre_Data extends Controller
 
         $data = $request->data;
 
-        $user = User::with('roles')->findOrFail($id);
+        $user = User::with(['roles' => function($query) {
+            $query->orderBy('id', 'asc');
+        }])->find($id);
         $user->save();
 
         $spectre = SpectreData::where('user_id', $id)->first();
@@ -448,6 +481,7 @@ class Spectre_Data extends Controller
         $userAntecedent->save();
 
         $roles = Auth::user()->roles;
+        $roles = $roles->sortBy('id');
         $permissions = $roles->flatMap(function ($role) {
             return $role->permissions->pluck('name');
         })->unique();
@@ -480,6 +514,7 @@ class Spectre_Data extends Controller
         $userAntecedent->delete();
 
         $roles = Auth::user()->roles;
+        $roles = $roles->sortBy('id');
         $permissions = $roles->flatMap(function ($role) {
             return $role->permissions->pluck('name');
         })->unique();
@@ -535,12 +570,15 @@ class Spectre_Data extends Controller
 
     public function loyauteView()
     {
-        $users = User::with('roles')->get();
+        $users = User::with(['roles' => function($query) {
+            $query->orderBy('id', 'asc');
+        }])->get();
         $SpectreData = SpectreData::all();
         $absences = Absence::all();
         $BDD = BaseDeDonnee::all();
 
         $roles = Auth::user()->roles;
+        $roles = $roles->sortBy('id');
         $permissions = $roles->flatMap(function ($role) {
             return $role->permissions->pluck('name');
         })->unique();
@@ -551,9 +589,13 @@ class Spectre_Data extends Controller
         $historique->description = "Consultation de la loyauté";
         $historique->save();
 
+        $photoUser = null;
+
         foreach ($roles as $role) {
 
-            $photoUser = PhotoUser::where('role_accept', $role->name)->first();
+            if(!$photoUser) {
+                $photoUser = PhotoUser::where('role_accept', $role->name)->first();
+            }
 
         }
 
@@ -624,6 +666,7 @@ class Spectre_Data extends Controller
     {
 
         $roles = Auth::user()->roles;
+        $roles = $roles->sortBy('id');
         $permissions = $roles->flatMap(function ($role) {
             return $role->permissions->pluck('name');
         })->unique();
@@ -688,12 +731,15 @@ class Spectre_Data extends Controller
     public function absenceAdmin()
     {
         $absences = Absence::all();
-        $users = User::with('roles')->get();
+        $users = User::with(['roles' => function($query) {
+            $query->orderBy('id', 'asc');
+        }])->get();
         $SpectreData = SpectreData::all();
 
         $BDD = BaseDeDonnee::all();
 
         $roles = Auth::user()->roles;
+        $roles = $roles->sortBy('id');
         $permissions = $roles->flatMap(function ($role) {
             return $role->permissions->pluck('name');
         })->unique();
@@ -703,10 +749,15 @@ class Spectre_Data extends Controller
         $historique->type = "absence";
         $historique->description = "Consultation des absences Admin";
         $historique->save();
+    
+        $photoUser = null;
+
 
         foreach ($roles as $role) {
 
-            $photoUser = PhotoUser::where('role_accept', $role->name)->first();
+            if(!$photoUser) {
+                $photoUser = PhotoUser::where('role_accept', $role->name)->first();
+            }
 
         }
 
@@ -741,6 +792,7 @@ class Spectre_Data extends Controller
                 ],
             ],
             'header' => $header,
+            'photos' => PhotoUser::all(),
         ]);
     }
 
@@ -762,7 +814,9 @@ class Spectre_Data extends Controller
 
     Public function BDDList()
     {
-        $users = User::with('roles')->get();
+        $users = User::with(['roles' => function($query) {
+            $query->orderBy('id', 'asc');
+        }])->get();
         $SpectreData = SpectreData::all();
         $BDD = BaseDeDonnee::all();
 
@@ -773,6 +827,7 @@ class Spectre_Data extends Controller
         $historique->save();
 
         $roles = Auth::user()->roles;
+        $roles = $roles->sortBy('id');
         $permissions = $roles->flatMap(function ($role) {
             return $role->permissions->pluck('name');
         })->unique();
@@ -805,6 +860,7 @@ class Spectre_Data extends Controller
         $historique->save();
 
         $roles = Auth::user()->roles;
+        $roles = $roles->sortBy('id');
         $permissions = $roles->flatMap(function ($role) {
             return $role->permissions->pluck('name');
         })->unique();
@@ -828,6 +884,7 @@ class Spectre_Data extends Controller
     {
 
         $roles = Auth::user()->roles;
+        $roles = $roles->sortBy('id');
         $permissions = $roles->flatMap(function ($role) {
             return $role->permissions->pluck('name');
         })->unique();
@@ -906,6 +963,7 @@ class Spectre_Data extends Controller
         $historique->save();
 
         $roles = Auth::user()->roles;
+        $roles = $roles->sortBy('id');
         $permissions = $roles->flatMap(function ($role) {
             return $role->permissions->pluck('name');
         })->unique();
@@ -924,7 +982,9 @@ class Spectre_Data extends Controller
 
     Public function BDDAdminList()
     {
-        $users = User::with('roles')->get();
+        $users = User::with(['roles' => function($query) {
+            $query->orderBy('id', 'asc');
+        }])->get();
         $SpectreData = SpectreData::all();
         $BDD = BaseDeDonnee::all();
         $absences = Absence::all();
@@ -936,13 +996,18 @@ class Spectre_Data extends Controller
         $historique->save();
 
         $roles = Auth::user()->roles;
+        $roles = $roles->sortBy('id');
         $permissions = $roles->flatMap(function ($role) {
             return $role->permissions->pluck('name');
         })->unique();
 
+        $photoUser = null;
+
         foreach ($roles as $role) {
 
-            $photoUser = PhotoUser::where('role_accept', $role->name)->first();
+            if(!$photoUser) {
+                $photoUser = PhotoUser::where('role_accept', $role->name)->first();
+            }
 
         }
 
@@ -988,7 +1053,9 @@ class Spectre_Data extends Controller
         $SpectreData = SpectreData::all();
         $absences = Absence::all();
         $BDD = BaseDeDonnee::all();
-        $users = User::with('roles')->get();
+        $users = User::with(['roles' => function($query) {
+            $query->orderBy('id', 'asc');
+        }])->get();
 
         $historique = new historique();
         $historique->user_id = Auth::id();
@@ -997,14 +1064,19 @@ class Spectre_Data extends Controller
         $historique->save();
 
         $roles = Auth::user()->roles;
+        $roles = $roles->sortBy('id');
         $permissions = $roles->flatMap(function ($role) {
             return $role->permissions->pluck('name');
         })->unique();
         $user = User::findOrFail(Auth::id());
 
+        $photoUser = null;
+
         foreach ($roles as $role) {
 
-            $photoUser = PhotoUser::where('role_accept', $role->name)->first();
+            if(!$photoUser) {
+                $photoUser = PhotoUser::where('role_accept', $role->name)->first();
+            }
 
         }
 
@@ -1063,6 +1135,7 @@ class Spectre_Data extends Controller
         $historique->save();
 
         $roles = Auth::user()->roles;
+        $roles = $roles->sortBy('id');
         $permissions = $roles->flatMap(function ($role) {
             return $role->permissions->pluck('name');
         })->unique();
@@ -1086,16 +1159,23 @@ class Spectre_Data extends Controller
         $SpectreData = SpectreData::all();
         $absences = Absence::all();
         $BDD = BaseDeDonnee::all();
-        $users = User::with('roles')->get();
+        $users = User::with(['roles' => function($query) {
+            $query->orderBy('id', 'asc');
+        }])->get();
 
         $roles = Auth::user()->roles;
+        $roles = $roles->sortBy('id');
         $permissions = $roles->flatMap(function ($role) {
             return $role->permissions->pluck('name');
         })->unique();
+
+        $photoUser = null;
         
         foreach ($roles as $role) {
 
-            $photoUser = PhotoUser::where('role_accept', $role->name)->first();
+            if(!$photoUser) {
+                $photoUser = PhotoUser::where('role_accept', $role->name)->first();
+            }
 
         }
 
@@ -1217,6 +1297,7 @@ class Spectre_Data extends Controller
         $historique->save();
 
         $roles = Auth::user()->roles;
+        $roles = $roles->sortBy('id');
         $permissions = $roles->flatMap(function ($role) {
             return $role->permissions->pluck('name');
         })->unique();
@@ -1248,6 +1329,7 @@ class Spectre_Data extends Controller
         $historique->save();
 
         $roles = Auth::user()->roles;
+        $roles = $roles->sortBy('id');
         $permissions = $roles->flatMap(function ($role) {
             return $role->permissions->pluck('name');
         })->unique();
@@ -1286,21 +1368,28 @@ class Spectre_Data extends Controller
     {
         
         $historiques = historique::all();
-        $users = User::with('roles')->get();
+        $users = User::with(['roles' => function($query) {
+            $query->orderBy('id', 'asc');
+        }])->get();
 
         $SpectreData = SpectreData::all();
         $absences = Absence::all();
         $BDD = BaseDeDonnee::all();
 
         $roles = Auth::user()->roles;
+        $roles = $roles->sortBy('id');
         $permissions = $roles->flatMap(function ($role) {
             return $role->permissions->pluck('name');
         })->unique();
         $user = User::findOrFail(Auth::id());
 
+        $photoUser = null;
+
         foreach ($roles as $role) {
 
-            $photoUser = PhotoUser::where('role_accept', $role->name)->first();
+            if(!$photoUser) {
+                $photoUser = PhotoUser::where('role_accept', $role->name)->first();
+            }
 
         }
 

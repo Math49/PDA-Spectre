@@ -75,7 +75,7 @@ export default function LoyauteView({ auth, users, SpectreData, header }) {
         e.preventDefault();
         if (selectedUser){
             
-            loyaute = selectedUser.loyauté + points;
+            loyaute = parseInt(selectedUser.loyauté) + parseInt(points);
             
             if (loyaute > 100) {
                 loyaute = 100;

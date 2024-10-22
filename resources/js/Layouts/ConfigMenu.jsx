@@ -35,7 +35,7 @@ export default function ConfigMenu({auth, header, children }) {
                     <i class="fa-solid fa-clock-rotate-left"></i>
                 </ConfigNav>
                 ) : null}
-                {hasPermission(auth, ("loyaute", "officer")) ? (
+                {hasPermission(auth, "loyaute") ? (
                 <ConfigNav href={route("loyaute")} active={route().current('loyaute')}>
                     <i class="fa-solid fa-medal"></i>
                 </ConfigNav>

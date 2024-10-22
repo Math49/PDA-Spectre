@@ -10,6 +10,8 @@ export default function Dashboard({ auth, header }) {
 
     let abstab = [];
 
+    console.log(header);
+
     let absenceslist = header.absences.slice(-5);
     absenceslist.map((absence) => {
         let user = header.spectre.find(spectre => parseInt(spectre.user_id) === parseInt(absence.user_id));
