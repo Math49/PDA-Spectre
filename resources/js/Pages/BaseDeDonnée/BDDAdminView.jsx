@@ -263,9 +263,7 @@ export default function BDDAdminView({ auth, data, antecedents, header }) {
                                                     key={antecedent.id}
                                                     className="relative flex text-warp h-[20vh] text-[2vh]"
                                                 >   
-                                                {hasPermission(auth, "deleteBDD") ? (
                                                     <Button onPress={() => { setAntToDelete(antecedent.id); onOpenChange(); }} className='text-red-600 text-[2vh] cursor-pointer p-0 min-w-0 h-auto bg-transparent rounded-none align-middle hover:!opacity-100 absolute top-1 z-20'><i class="fa-solid fa-trash"></i></Button>
-                                                ) : null}
                                                     <p className="text-white opacity-50 w-[20%] text-center">
                                                         {antecedent.id}
                                                     </p>
@@ -282,7 +280,9 @@ export default function BDDAdminView({ auth, data, antecedents, header }) {
                                         )}
                                     </div>
                                 </div>
+                                {hasPermission(auth, "deleteBDD") ? (
                                 <Button onPress={() => { setBDDToDelete(data); handleBDDModalOpen() }} className='text-red-600 text-[4vh] cursor-pointer p-0 min-w-0 h-auto bg-transparent rounded-none align-middle hover:!opacity-100 absolute right-0 top-0 z-20'><i class="fa-solid fa-trash"></i></Button>
+                                ) : null}
                             </div>
                         </div>
                     </div>
