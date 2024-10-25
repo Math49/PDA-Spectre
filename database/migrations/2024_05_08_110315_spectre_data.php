@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('spectre_data', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->uuid('user_id');
+            $table->id();
+            $table->unsignedBigInteger('user_id');  // Clé étrangère pour la table users
             $table->string('STEAM_ID',17);
             $table->string('matricule',17);
             $table->integer('loyauté');

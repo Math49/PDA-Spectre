@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('absences', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->uuid('user_id');
+            $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->date('date_debut');
             $table->date('date_fin');
             $table->string('raison');

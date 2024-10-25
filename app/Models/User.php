@@ -8,27 +8,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use App\Models\SpectreData;
-use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasRoles;
-
-
-    public $incrementing = false; // Désactive l'incrémentation auto
-    protected $keyType = 'string'; // Indique que l'ID est de type string
-
-    protected static function boot()
-    {
-        parent::boot();
-
-        // Génère automatiquement un UUID si l'ID est nul
-        static::creating(function ($model) {
-            if (empty($model->id)) {
-                $model->id = (string) Str::uuid();
-            }
-        });
-    }
 
 
     /**
