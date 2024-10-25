@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\UserMedal;
 
 class Medal extends Model
 {
@@ -13,6 +14,6 @@ class Medal extends Model
 
     public function UserMedal()
     {
-        return $this->hasMany(user_medal::class);
+        return $this->hasMany(UserMedal::class);
     }
 }
