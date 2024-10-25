@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PhotoUser extends Model
 {
+    
     protected $fillable = [
         'lien',
         'role_accept',

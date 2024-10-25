@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('spectre_data', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->unsignedBigInteger('user_id');  // Clé étrangère pour la table users
+            $table->uuid('user_id');
             $table->string('STEAM_ID',17);
             $table->string('matricule',17);
             $table->integer('loyauté');

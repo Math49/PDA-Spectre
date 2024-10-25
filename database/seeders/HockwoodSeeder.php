@@ -8,6 +8,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 use App\Models\SpectreData;
+use Illuminate\Support\Str;
+use Psy\Readline\Hoa\Console;
 
 class HockwoodSeeder extends Seeder
 {
@@ -19,11 +21,18 @@ class HockwoodSeeder extends Seeder
     public function run()
     {
         $user = User::create([
+            'id' => Str::uuid(),
             'username' => 'Hockwood',
             'password' => Hash::make('123456789'),
         ]);
 
+        echo "$user";
+
+        $user->syncRoles(['Hockwood', 'Etat Major']);
+        new Registered($user);
+
         $spectreData = SpectreData::create([
+            'id' => Str::uuid(),
             'user_id' => $user->id,
             'STEAM_ID' => "76561198845579992",
             'matricule' => 0000,
@@ -31,9 +40,8 @@ class HockwoodSeeder extends Seeder
             'vie' => 3,
         ]);
 
-        $user->syncRoles(['Hockwood', 'Etat Major']);
 
-        new Registered($user, $spectreData);
+        new Registered($spectreData);
     }
 }
 

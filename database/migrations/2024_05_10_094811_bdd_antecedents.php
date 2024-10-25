@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('bdd_antecedents', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->unsignedBigInteger('bdd_id');
+            $table->id('id')->primary();
+            $table->uuid('bdd_id');
             $table->string('description');
             $table->timestamps();
 

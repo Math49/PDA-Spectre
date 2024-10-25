@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('historiques', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->unsignedBigInteger('user_id');
+            $table->id('id')->primary();
+            $table->uuid('user_id');
             $table->string('type');
             $table->string('description');
             $table->timestamps();
