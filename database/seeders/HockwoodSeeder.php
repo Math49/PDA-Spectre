@@ -20,7 +20,7 @@ class HockwoodSeeder extends Seeder
     {
         $user = User::create([
             'username' => 'Hockwood',
-            'password' => Hash::make('123456789'),
+            'password' => Hash::make('DYN-IERmer47'),
         ]);
 
         $spectreData = SpectreData::create([
