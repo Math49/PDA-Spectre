@@ -6,6 +6,7 @@ import { DateInput } from "@nextui-org/date-input";
 import { Inertia } from '@inertiajs/inertia';
 import { hasPermission } from '@/utils/hasPermission';
 import NotificationPopup from '@/Components/NotificationPopup';
+import NonAffiliee from '@/Components/NonAffiliee';
 
 export default function BDDUserList({ auth, users, SpectreData, BDD }) {
 
@@ -15,6 +16,7 @@ export default function BDDUserList({ auth, users, SpectreData, BDD }) {
         <div className='background-spectre z-10 relative flex flex-col gap-[5vh] h-[100vh]'>
             <Head title="BDD Liste" />
             <UserHeader auth={auth} />
+            <NonAffiliee />
             <NotificationPopup />
 
             <main className='w-full h-full overflow-hidden'>

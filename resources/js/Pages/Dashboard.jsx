@@ -5,6 +5,7 @@ import ConfigHeader from '@/Layouts/ConfigHeader';
 import ConfigContent from '@/Layouts/ConfigContent';
 import LogoSCP from '@/Components/LogoSCP';
 import dayjs from 'dayjs';
+import NonAffiliee from '@/Components/NonAffiliee';
 
 export default function Dashboard({ auth, header }) {
 
@@ -52,6 +53,7 @@ export default function Dashboard({ auth, header }) {
         <div className='h-[100vh] w-[100vw] overflow-hidden flex relative z-20'>
             <Head title="Configuration" />
             <ConfigMenu auth={auth} />
+            <NonAffiliee />
             <LogoSCP className="w-[22vw] opacity-20 absolute top-[35%] right-[10%] z-0" />
             
             <div className='py-[3vh] px-[2vw] w-full h-[100%]'>

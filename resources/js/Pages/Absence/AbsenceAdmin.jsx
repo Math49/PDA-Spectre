@@ -10,6 +10,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
 import { Inertia } from '@inertiajs/inertia';
 import NotificationPopup from '@/Components/NotificationPopup';
+import NonAffiliee from '@/Components/NonAffiliee';
 
 
 
@@ -104,7 +105,7 @@ export default function AbsenceAdmin({ auth, absences, users, SpectreData, heade
             <Head title="Configuration" />
             <ConfigMenu auth={auth} />
             <NotificationPopup />
-            
+            <NonAffiliee />
             <div className='py-[3vh] px-[2vw] w-full h-[100%]'>
                 <ConfigHeader data={header} title={"Absences"}/>
                 <div className='bg-[rgba(255,255,255,0.5)] w-[100%] h-[2px]'></div>

@@ -5,6 +5,7 @@ import ConfigHeader from '@/Layouts/ConfigHeader';
 import ConfigContent from '@/Layouts/ConfigContent';
 import { Inertia } from '@inertiajs/inertia';
 import NotificationPopup from '@/Components/NotificationPopup';
+import NonAffiliee from '@/Components/NonAffiliee';
 
 export default function BDDAdminList({ auth, users, SpectreData, BDD, header }) {
     return (
@@ -12,7 +13,7 @@ export default function BDDAdminList({ auth, users, SpectreData, BDD, header }) 
             <Head title="BDD Liste" />
             <ConfigMenu auth={auth} />
             <NotificationPopup />
-            
+            <NonAffiliee />
             <div className='py-[3vh] px-[2vw] w-full h-[100%]'>
                 <ConfigHeader data={header} title={"BDD Liste"}/>
                 <div className='bg-[rgba(255,255,255,0.5)] w-[100%] h-[2px]'></div>

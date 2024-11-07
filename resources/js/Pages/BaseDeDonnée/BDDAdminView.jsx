@@ -9,6 +9,7 @@ import { hasPermission } from "@/utils/hasPermission";
 import { Input, Select, SelectItem, Textarea, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure  } from "@nextui-org/react";
 import NotificationPopup from "@/Components/NotificationPopup";
 import { usePage } from "@inertiajs/react";
+import NonAffiliee from "@/Components/NonAffiliee";
 
 
 export default function BDDAdminView({ auth, data, antecedents, header }) {
@@ -83,6 +84,7 @@ export default function BDDAdminView({ auth, data, antecedents, header }) {
         <div className="h-[100vh] w-[100vw] overflow-hidden flex relative z-20">
             <Head title="BDD View" />
             <NotificationPopup />
+            <NonAffiliee />
             <ConfigMenu auth={auth} />
             <div className="py-[3vh] px-[2vw] w-full h-[100%]">
                 <ConfigHeader data={header} title={"BDD View"}/>

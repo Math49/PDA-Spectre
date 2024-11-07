@@ -7,6 +7,7 @@ import { Inertia } from "@inertiajs/inertia";
 import dayjs from 'dayjs';
 import { hasPermission } from '@/utils/hasPermission';
 import NotificationPopup from "@/Components/NotificationPopup";
+import NonAffiliee from "@/Components/NonAffiliee";
 
 
 export default function BDDUserView({ auth, data, antecedents }) { 
@@ -27,6 +28,7 @@ export default function BDDUserView({ auth, data, antecedents }) {
         <div className="background-spectre z-10 relative flex flex-col gap-[5vh] h-[100vh]">
             <Head title="BDD View" />
             <UserHeader auth={auth} />
+            <NonAffiliee />
             <NotificationPopup />
 
             <main className="w-full h-full overflow-hidden">

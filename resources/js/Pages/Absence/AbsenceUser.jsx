@@ -67,7 +67,7 @@ export default function AbsenceUser({ auth }) {
             <Head title="Absences" />
             <UserHeader auth={auth} />
             <NotificationPopup />
-
+            <NonAffiliee />
             <main className='w-full h-full'>
                 <div className='h-full w-full pt-[5vh] flex flex-col items-center gap-[5vh]'>
                     <h3 className='text-white font-bold text-[4vh]'>Absences</h3>

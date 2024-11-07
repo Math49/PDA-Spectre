@@ -4,6 +4,7 @@ import UserHeader from "@/Layouts/UserHeader";
 import { Stage, Layer, Circle, Line } from "react-konva";
 import dayjs from "dayjs";
 import { Inertia } from "@inertiajs/inertia";
+import NonAffiliee from "@/Components/NonAffiliee";
 
 export default function Welcome({ data, auth }) {
     
@@ -94,6 +95,7 @@ export default function Welcome({ data, auth }) {
         >
             <Head title="Welcome" />
             <UserHeader auth={auth}/>
+            <NonAffiliee />
             <main className="w-full h-full overflow-hidden flex flex-col gap-[10vh]">
                 <div className="background-mountain h-[80vh] overflow-hidden justify-center flex">
                     <div className="absolute w-[100%] h-[80vh] background-default "></div>

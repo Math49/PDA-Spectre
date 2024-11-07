@@ -4,6 +4,7 @@ import InputError from '@/Components/InputError';
 import { Head, Link, useForm } from '@inertiajs/react';
 import {Input} from "@nextui-org/react";
 import LogoSCP from "@/Components/LogoSCP";
+import NonAffiliee from '@/Components/NonAffiliee';
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -27,6 +28,7 @@ export default function Login({ status, canResetPassword }) {
     return (
         <div className='relative z-10 flex flex-col items-center gap-[5vh] h-[100vh] w-[100vw] overflow-hidden'>
             <Head title="Connexion" />
+            <NonAffiliee />
             <LogoSCP className="h-[100vh] opacity-20 absolute top-10 z-0"/>
             <div className='flex justify-center'>
                 <img className='h-[5vh]' src="/images/element/Compass.png"/>

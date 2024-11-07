@@ -9,6 +9,7 @@ import { hasPermission } from '@/utils/hasPermission';
 import {now} from "@internationalized/date";
 import dayjs from 'dayjs';
 import NotificationPopup from '@/Components/NotificationPopup';
+import NonAffiliee from '@/Components/NonAffiliee';
 
 
 export default function UsersEdit({ user, auth, data, medals, userMedals, antecedents, header, photo }) {
@@ -120,6 +121,7 @@ export default function UsersEdit({ user, auth, data, medals, userMedals, antece
         <div className="h-[100vh] overflow-hidden flex relative z-20" onMouseMove={handleMouseMove}>
             <Head title="Configuration" />
             <ConfigMenu auth={auth} />
+            <NonAffiliee />
             <NotificationPopup />
             <div className="py-[3vh] px-[2vw] w-full h-[100%]">
                 <ConfigHeader data={header} title={"Gestion des agents"}/>

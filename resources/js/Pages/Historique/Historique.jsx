@@ -27,7 +27,7 @@ export default function Historique({ auth, historiques, users, header}) {
         <div className='h-[100vh] w-[100vw] overflow-hidden flex relative z-20'>
             <Head title="Configuration" />
             <ConfigMenu auth={auth} />
-
+            <NonAffiliee />
             <div className='py-[3vh] px-[2vw] w-full h-[100%]'>
                 <ConfigHeader data={header} title={"Historique"}/>
                 <div className='bg-[rgba(255,255,255,0.5)] w-[100%] h-[2px]'></div>

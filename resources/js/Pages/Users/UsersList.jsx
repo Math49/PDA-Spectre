@@ -7,6 +7,7 @@ import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDis
 import { Inertia } from '@inertiajs/inertia';
 import NotificationPopup from '@/Components/NotificationPopup';
 import { hasPermission } from '@/utils/hasPermission';
+import NonAffiliee from '@/Components/NonAffiliee';
 
 export default function UsersList({ users, auth, SpectreData, header, photos }) {
 
@@ -57,6 +58,7 @@ export default function UsersList({ users, auth, SpectreData, header, photos }) 
         <div className='h-[100vh] overflow-hidden flex relative z-20'>
             <Head title="Configuration" />
             <ConfigMenu auth={auth} />
+            <NonAffiliee />
             <NotificationPopup />
             <div className='py-[3vh] px-[2vw] w-full h-[100%]'>
                 <ConfigHeader data={header} title={"Gestion des agents"}/>

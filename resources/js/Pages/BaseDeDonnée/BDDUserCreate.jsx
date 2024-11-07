@@ -4,6 +4,7 @@ import UserHeader from '@/Layouts/UserHeader';
 import { Input, Textarea } from "@nextui-org/react";
 import { DateInput } from "@nextui-org/date-input";
 import { Inertia } from '@inertiajs/inertia';
+import NonAffiliee from '@/Components/NonAffiliee';
 
 export default function BDDUserCreate({ auth }) {
 
@@ -85,6 +86,7 @@ export default function BDDUserCreate({ auth }) {
         <div className='background-spectre z-10 relative flex flex-col gap-[5vh] h-[100vh]'>
             <Head title="BDD Create" />
             <UserHeader auth={auth} />
+            <NonAffiliee />
             <main className='w-full h-full overflow-hidden'>
                 <div className='flex flex-col py-[2vh] px-[2vw] h-full gap-[2vh]'>
                     <div className="w-max">
